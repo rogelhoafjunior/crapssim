@@ -127,6 +127,11 @@ class Table(object):
                     and self.total_player_cash > 0
                 )
 
+            players_status = [p.stop_player for p in self.players]
+
+            if all(players_status):
+                continue_rolling = False
+
     def _add_player_bets(self):
         """ Implement each player's betting strategy """
         """ TODO: restrict bets that shouldn't be possible based on table"""

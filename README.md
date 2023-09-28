@@ -74,7 +74,7 @@ strategies = {
 for i in range(n_sim):
     table = craps.Table() 
     for s in strategies:
-        table.add_player(craps.Player(bankroll, strategies[s], s))
+        table.add_player(craps.Player(bankroll, strategies[s], s, stop_win=bankroll + (bankroll * percentage/100), stop_loss=bankroll - (bankroll * percentage/100)))
 
     table.run(max_rolls=float("inf"), max_shooter=10, verbose=False)
     for s in strategies:

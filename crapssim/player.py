@@ -19,15 +19,26 @@ class Player(object):
         Sum of bet value for the player
     """
 
-    def __init__(self, bankroll, bet_strategy=None, name="Player"):
+    def __init__(self, bankroll, bet_strategy=None, name="Player", stop_win=None, stop_loss=None):
         self.bankroll = bankroll
         self.bet_strategy = bet_strategy
         self.name = name
         self.bets_on_table = []
         self.total_bet_amount = 0
+        self.stop_win = stop_win
+        self.stop_loss = stop_loss
+        self.stop_player = False
         # TODO: initial betting strategy
 
     def bet(self, bet_object):
+        if self.stop_win and self.bankroll >= self.stop_win:
+            self.stop_player = True
+            return
+
+        if self.stop_loss and self.bankroll <= self.stop_loss:
+            self.stop_player = True
+            return
+
         if self.bankroll >= bet_object.bet_amount:
             self.bankroll -= bet_object.bet_amount
             self.bets_on_table.append(
